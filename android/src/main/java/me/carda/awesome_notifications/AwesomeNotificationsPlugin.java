@@ -1,4 +1,4 @@
-package me.carda.awesome_notifications.notifications;
+package me.carda.awesome_notifications;
 
 import static me.carda.awesome_notifications.flutter_callkit_incoming.SharedPreferencesUtilsKt.getDataActiveCalls;
 import static me.carda.awesome_notifications.flutter_callkit_incoming.SharedPreferencesUtilsKt.removeAllCalls;
@@ -41,10 +41,13 @@ import android.app.Activity;
 
 import org.jetbrains.annotations.NotNull;
 
-import me.carda.awesome_notifications.EventCallbackHandler;
 import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver;
 import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitNotificationManager;
 import me.carda.awesome_notifications.flutter_callkit_incoming.Data;
+import me.carda.awesome_notifications.notifications.BitmapResourceDecoder;
+import me.carda.awesome_notifications.notifications.NotificationBuilder;
+import me.carda.awesome_notifications.notifications.NotificationScheduler;
+import me.carda.awesome_notifications.notifications.NotificationSender;
 import me.carda.awesome_notifications.notifications.handlers.PermissionCompletionHandler;
 import me.carda.awesome_notifications.notifications.managers.BadgeManager;
 import me.carda.awesome_notifications.notifications.managers.CancellationManager;

@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import me.carda.awesome_notifications.notifications.AwesomeNotificationsPlugin
+import me.carda.awesome_notifications.AwesomeNotificationsPlugin
 
 class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 

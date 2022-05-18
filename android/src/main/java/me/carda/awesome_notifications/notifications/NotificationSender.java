@@ -2,17 +2,9 @@ package me.carda.awesome_notifications.notifications;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.service.notification.StatusBarNotification;
-
-import java.util.Arrays;
-import java.util.List;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationManagerCompat;
 
 import me.carda.awesome_notifications.BroadcastSender;
 import me.carda.awesome_notifications.AwesomeNotificationsPlugin;
