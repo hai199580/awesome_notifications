@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,8 +112,8 @@ public class AwesomeNotificationsPlugin
         return mainTargetClassName;
     }
 
-    public static void sendEvent(String event, Map<String, ?> body) {
-        eventHandler.send(event, body);
+    public static void sendEvent(String event, String body) {
+        eventHandler.send(event, "body");
     }
 
     @Override
@@ -489,15 +490,17 @@ public class AwesomeNotificationsPlugin
 
             switch (call.method) {
                 case "showCallkitIncoming":
-//                    Data data = new Data(call.arguments());
-//                    data.setFrom("notification");
-//                    //send BroadcastReceiver
-//                    applicationContext.sendBroadcast(
-//                            CallkitIncomingBroadcastReceiver.Companion.getIntentIncoming(
-//                                    applicationContext,
-//                                    data.toBundle()
-//                            )
-//                    );
+                    Map<String,String> map = new HashMap<>();
+                    map.put("nameCaller","Triu");
+                    Data data = new Data(map);
+                    data.setFrom("notification");
+                    //send BroadcastReceiver
+                    applicationContext.sendBroadcast(
+                            CallkitIncomingBroadcastReceiver.Companion.getIntentIncoming(
+                                    applicationContext,
+                                    data.toBundle()
+                            )
+                    );
                     result.success("OK");
                     return;
                 case "showMissCallNotification":
@@ -1380,4 +1383,7 @@ public class AwesomeNotificationsPlugin
 
     }
 
+    public static void send(@NotNull String event, @NotNull String s) {
+
+    }
 }
