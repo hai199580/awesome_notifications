@@ -1,4 +1,4 @@
-package me.carda.awesome_notifications.utils;
+package me.carda.awesome_notifications.notifications;
 
 import static me.carda.awesome_notifications.flutter_callkit_incoming.SharedPreferencesUtilsKt.getDataActiveCalls;
 import static me.carda.awesome_notifications.flutter_callkit_incoming.SharedPreferencesUtilsKt.removeAllCalls;
@@ -44,11 +44,9 @@ import me.carda.awesome_notifications.EventCallbackHandler;
 import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver;
 import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitNotificationManager;
 import me.carda.awesome_notifications.flutter_callkit_incoming.Data;
-import me.carda.awesome_notifications.notifications.BitmapResourceDecoder;
 import me.carda.awesome_notifications.notifications.handlers.PermissionCompletionHandler;
 import me.carda.awesome_notifications.notifications.managers.BadgeManager;
 import me.carda.awesome_notifications.notifications.managers.CancellationManager;
-import me.carda.awesome_notifications.notifications.managers.StatusBarManager;
 import me.carda.awesome_notifications.notifications.managers.ChannelGroupManager;
 import me.carda.awesome_notifications.notifications.models.DefaultsModel;
 import me.carda.awesome_notifications.notifications.models.NotificationChannelGroupModel;
@@ -60,8 +58,6 @@ import me.carda.awesome_notifications.notifications.enumerators.NotificationLife
 import me.carda.awesome_notifications.notifications.enumerators.NotificationSource;
 import me.carda.awesome_notifications.notifications.exceptions.AwesomeNotificationException;
 
-import me.carda.awesome_notifications.notifications.NotificationBuilder;
-
 import me.carda.awesome_notifications.notifications.managers.ChannelManager;
 import me.carda.awesome_notifications.notifications.managers.CreatedManager;
 import me.carda.awesome_notifications.notifications.managers.DefaultsManager;
@@ -72,9 +68,6 @@ import me.carda.awesome_notifications.notifications.managers.ScheduleManager;
 import me.carda.awesome_notifications.notifications.models.NotificationChannelModel;
 import me.carda.awesome_notifications.notifications.models.returnedData.ActionReceived;
 import me.carda.awesome_notifications.notifications.models.returnedData.NotificationReceived;
-
-import me.carda.awesome_notifications.notifications.NotificationSender;
-import me.carda.awesome_notifications.notifications.NotificationScheduler;
 
 import me.carda.awesome_notifications.utils.BooleanUtils;
 import me.carda.awesome_notifications.utils.DateUtils;
