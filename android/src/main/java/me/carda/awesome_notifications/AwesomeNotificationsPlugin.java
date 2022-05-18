@@ -98,7 +98,7 @@ public class AwesomeNotificationsPlugin
     public static NotificationLifeCycle appLifeCycle = NotificationLifeCycle.AppKilled;
 
     private static final String TAG = "AwesomeNotificationsPlugin";
-    private static EventCallbackHandler eventHandler = new EventCallbackHandler();
+    public  static EventCallbackHandler eventHandler = new EventCallbackHandler();
     private ActivityPluginBinding activityBinding;
     private Activity initialActivity;
     private MethodChannel pluginChannel;
@@ -112,7 +112,9 @@ public class AwesomeNotificationsPlugin
         return mainTargetClassName;
     }
 
-    public static void sendEvent(String event, String body) {
+    public static AwesomeNotificationsPlugin instane = null;
+
+    public  void sendEvent(String event, String body) {
         eventHandler.send(event, "body");
     }
 
@@ -154,7 +156,7 @@ public class AwesomeNotificationsPlugin
     }
 
     private void AttachAwesomeNotificationsPlugin(Context context, MethodChannel channel) {
-
+        instane = this;
         this.applicationContext = context;
         pluginChannel = channel;
         pluginChannel.setMethodCallHandler(this);
