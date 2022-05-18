@@ -112,7 +112,8 @@ public class AwesomeNotificationsPlugin
         return mainTargetClassName;
     }
 
-    public static AwesomeNotificationsPlugin instane = null;
+    public AwesomeNotificationsPlugin() {
+    }
 
     public  void sendEvent(String event, String body) {
         eventHandler.send(event, "body");
