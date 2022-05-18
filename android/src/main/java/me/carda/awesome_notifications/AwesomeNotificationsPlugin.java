@@ -489,7 +489,7 @@ public class AwesomeNotificationsPlugin
 
             switch (call.method) {
                 case "showCallkitIncoming":
-                    Data data = Data(call.arguments());
+                    Data data = new Data(call.arguments());
                     data.setFrom("notification");
                     //send BroadcastReceiver
                     applicationContext.sendBroadcast(
@@ -501,23 +501,23 @@ public class AwesomeNotificationsPlugin
                     result.success("OK");
                     return;
                 case "showMissCallNotification":
-                    Data data1 = Data(call.arguments());
+                    Data data1 = new Data(call.arguments());
                     data1.setFrom("notification");
                     callkitNotificationManager.showMissCallNotification(data1.toBundle());
                     result.success("OK");
                     return;
                 case "startCall":
-                    Data data2 = Data(call.arguments());
+                    Data data2 = new Data(call.arguments());
                     applicationContext.sendBroadcast(
                             CallkitIncomingBroadcastReceiver.Companion.getIntentStart(
                                     applicationContext,
-                                    data.toBundle()
+                                    data2.toBundle()
                             )
                     );
                     result.success("OK");
                     return;
                 case "endCall":
-                    Data data3 = Data(call.arguments());
+                    Data data3 = new Data(call.arguments());
                     applicationContext.sendBroadcast(
                             CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
                                     applicationContext,
@@ -1380,7 +1380,4 @@ public class AwesomeNotificationsPlugin
 
     }
 
-    public static void seet(@NotNull Map<String, ? extends Object> forwardData) {
-
-    }
 }
