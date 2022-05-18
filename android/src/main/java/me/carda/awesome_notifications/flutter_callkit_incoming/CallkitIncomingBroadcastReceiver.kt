@@ -204,6 +204,6 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 "extra" to data.getSerializable(EXTRA_CALLKIT_EXTRA) as HashMap<String, Any?>,
                 "android" to android
         )
-        AwesomeNotificationsPlugin.sendEvent(event, forwardData)
+//        AwesomeNotificationsPlugin.sendEvent(event, forwardData)
     }
 }
