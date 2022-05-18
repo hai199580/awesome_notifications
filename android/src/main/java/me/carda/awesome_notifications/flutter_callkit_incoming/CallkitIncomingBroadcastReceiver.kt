@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import me.carda.awesome_notifications.AwesomeNotificationsPlugin
+import me.carda.awesome_notifications.flutter_callkit_incoming.FlutterCallkitIncomingPlugin.Companion.sendEvent
 
 class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
@@ -202,6 +204,6 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
                 "extra" to data.getSerializable(EXTRA_CALLKIT_EXTRA) as HashMap<String, Any?>,
                 "android" to android
         )
-        FlutterCallkitIncomingPlugin.sendEvent(event, forwardData)
+        AwesomeNotificationsPlugin.sendEvent(event, forwardData)
     }
 }

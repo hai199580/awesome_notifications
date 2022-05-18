@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 ///
 class FlutterCallkitIncoming {
   static const MethodChannel _channel =
-      const MethodChannel('flutter_callkit_incoming');
+      const MethodChannel('awesome_notifications');
   static const EventChannel _eventChannel =
       const EventChannel('flutter_callkit_incoming_events');
 

@@ -1,5 +1,8 @@
 package me.carda.awesome_notifications;
 
+import static me.carda.awesome_notifications.flutter_callkit_incoming.SharedPreferencesUtilsKt.getDataActiveCalls;
+import static me.carda.awesome_notifications.flutter_callkit_incoming.SharedPreferencesUtilsKt.removeAllCalls;
+
 import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.BroadcastReceiver;
@@ -35,6 +38,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import android.app.Activity;
 
+import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver;
+import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitNotificationManager;
+import me.carda.awesome_notifications.flutter_callkit_incoming.Data;
 import me.carda.awesome_notifications.notifications.BitmapResourceDecoder;
 import me.carda.awesome_notifications.notifications.handlers.PermissionCompletionHandler;
 import me.carda.awesome_notifications.notifications.managers.BadgeManager;
@@ -91,16 +97,22 @@ public class AwesomeNotificationsPlugin
     public static NotificationLifeCycle appLifeCycle = NotificationLifeCycle.AppKilled;
 
     private static final String TAG = "AwesomeNotificationsPlugin";
-
+    private static EventCallbackHandler eventHandler = new EventCallbackHandler();
     private ActivityPluginBinding activityBinding;
     private Activity initialActivity;
     private MethodChannel pluginChannel;
     private Context applicationContext;
 
     public static MediaSessionCompat mediaSession;
+    private CallkitNotificationManager callkitNotificationManager;
+    private EventChannel events = null;
 
     public static String getMainTargetClassName() {
         return mainTargetClassName;
+    }
+
+    public static void sendEvent(String event, Map<String, Object> body) {
+        eventHandler.send(event, body);
     }
 
     @Override
@@ -128,7 +140,9 @@ public class AwesomeNotificationsPlugin
     // FOR NEWER FLUTTER VERSIONS (1.12 releases and above)
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-
+        callkitNotificationManager = new CallkitNotificationManager(flutterPluginBinding.getApplicationContext());
+        events = new EventChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_callkit_incoming_events");
+        events.setStreamHandler(eventHandler);
         AttachAwesomeNotificationsPlugin(
                 flutterPluginBinding.getApplicationContext(),
                 new MethodChannel(
@@ -141,7 +155,6 @@ public class AwesomeNotificationsPlugin
     private void AttachAwesomeNotificationsPlugin(Context context, MethodChannel channel) {
 
         this.applicationContext = context;
-
         pluginChannel = channel;
         pluginChannel.setMethodCallHandler(this);
 
@@ -166,6 +179,48 @@ public class AwesomeNotificationsPlugin
 
         NotificationScheduler.refreshScheduleNotifications(context);
         // enableFirebase(context);
+    }
+
+    public void showIncomingNotification(Data data) {
+        data.setFrom("notification");
+        callkitNotificationManager.showIncomingNotification(data.toBundle());
+        //send BroadcastReceiver
+        applicationContext.sendBroadcast(
+                CallkitIncomingBroadcastReceiver.Companion.getIntentIncoming(
+                        applicationContext,
+                        data.toBundle()
+                )
+        );
+    }
+
+    public void showMissCallNotification(Data data) {
+        callkitNotificationManager.showIncomingNotification(data.toBundle());
+    }
+
+    public void startCall(Data data) {
+        applicationContext.sendBroadcast(
+                CallkitIncomingBroadcastReceiver.Companion.getIntentStart(
+                        applicationContext,
+                        data.toBundle()
+                )
+        );
+    }
+
+    public void endCall(Data data) {
+        applicationContext.sendBroadcast(
+                CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
+                        applicationContext,
+                        data.toBundle()
+                )
+        );
+    }
+
+    public void endAllCalls() {
+        ArrayList<Data> calls = getDataActiveCalls(applicationContext);
+        for (Data call : calls) {
+            applicationContext.sendBroadcast(CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(applicationContext, call.toBundle()));
+        }
+        removeAllCalls(applicationContext);
     }
 
     @Override
@@ -433,7 +488,66 @@ public class AwesomeNotificationsPlugin
         try {
 
             switch (call.method) {
-
+                case "showCallkitIncoming":
+                    Data data = Data(call.arguments());
+                    data.setFrom("notification");
+                    //send BroadcastReceiver
+                    applicationContext.sendBroadcast(
+                            CallkitIncomingBroadcastReceiver.Companion.getIntentIncoming(
+                                    applicationContext,
+                                    data.toBundle()
+                            )
+                    );
+                    result.success("OK");
+                    return;
+                case "showMissCallNotification":
+                    Data data1 = Data(call.arguments());
+                    data1.setFrom("notification");
+                    callkitNotificationManager.showMissCallNotification(data1.toBundle());
+                    result.success("OK");
+                    return;
+                case "startCall":
+                    Data data2 = Data(call.arguments());
+                    applicationContext.sendBroadcast(
+                            CallkitIncomingBroadcastReceiver.Companion.getIntentStart(
+                                    applicationContext,
+                                    data.toBundle()
+                            )
+                    );
+                    result.success("OK");
+                    return;
+                case "endCall":
+                    Data data3 = Data(call.arguments());
+                    applicationContext.sendBroadcast(
+                            CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
+                                    applicationContext,
+                                    data3.toBundle()
+                            )
+                    );
+                    result.success("OK");
+                    return;
+                case "endAllCalls":
+                    ArrayList<Data> calls = getDataActiveCalls(applicationContext);
+                    for (Data it : calls) {
+                        if (it.isAccepted()) {
+                            applicationContext.sendBroadcast(
+                                    CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
+                                            applicationContext,
+                                            it.toBundle()
+                                    )
+                            );
+                        } else {
+                            applicationContext.sendBroadcast(
+                                    CallkitIncomingBroadcastReceiver.Companion.getIntentDecline(
+                                            applicationContext,
+                                            it.toBundle()
+                                    )
+                            );
+                        }
+                    }
+                    removeAllCalls(applicationContext);
+                    result.success("OK");
+                    return;
                 case Definitions.CHANNEL_METHOD_INITIALIZE:
                     channelMethodInitialize(call, result);
                     return;
@@ -603,7 +717,7 @@ public class AwesomeNotificationsPlugin
                     new ForegroundService.StartParameter(applicationContext, notificationData, startType, hasForegroundServiceType, foregroundServiceType);
             Intent intent = new Intent(applicationContext, ForegroundService.class);
             intent.putExtra(ForegroundService.StartParameter.EXTRA, parameter);
-            if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O /*Android 8*/) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O /*Android 8*/) {
                 applicationContext.startForegroundService(intent);
             } else {
                 applicationContext.startService(intent);
@@ -633,11 +747,11 @@ public class AwesomeNotificationsPlugin
     }
 
     private void channelMethodGetPlatformVersion(@NonNull final MethodCall call, @NonNull final Result result) throws Exception {
-        result.success("Android-"+String.valueOf(Build.VERSION.SDK_INT));
+        result.success("Android-" + String.valueOf(Build.VERSION.SDK_INT));
     }
 
     private void channelMethodEnableWakeLock(@NonNull final MethodCall call, @NonNull final Result result) throws Exception {
-        result.success("Android-"+String.valueOf(Build.VERSION.SDK_INT));
+        result.success("Android-" + String.valueOf(Build.VERSION.SDK_INT));
     }
 
     private void channelMethodListAllSchedules(@NonNull final MethodCall call, @NonNull final Result result) throws Exception {
@@ -808,7 +922,7 @@ public class AwesomeNotificationsPlugin
         String channelKey = call.arguments();
         boolean dismissed = CancellationManager.dismissNotificationsByChannelKey(applicationContext, channelKey);
 
-        if(AwesomeNotificationsPlugin.debug)
+        if (AwesomeNotificationsPlugin.debug)
             Log.d(TAG, "Notifications from channel " + channelKey + (dismissed ? "" : "not found to be") + " dismissed");
 
         result.success(true);
@@ -821,7 +935,7 @@ public class AwesomeNotificationsPlugin
 
         NotificationScheduler.cancelSchedulesByChannelKey(applicationContext, channelKey);
 
-        if(AwesomeNotificationsPlugin.debug)
+        if (AwesomeNotificationsPlugin.debug)
             Log.d(TAG, "Scheduled Notifications from channel " + channelKey + (dismissed ? "" : "not found to be") + " canceled");
 
         result.success(true);
@@ -832,7 +946,7 @@ public class AwesomeNotificationsPlugin
         String channelKey = call.arguments();
         boolean dismissed = CancellationManager.cancelNotificationsByChannelKey(applicationContext, channelKey);
 
-        if(AwesomeNotificationsPlugin.debug)
+        if (AwesomeNotificationsPlugin.debug)
             Log.d(TAG, "Notifications and schedules from channel " + channelKey + (dismissed ? "" : "not found to be") + " canceled");
 
         result.success(true);
@@ -843,7 +957,7 @@ public class AwesomeNotificationsPlugin
         String groupKey = call.arguments();
         boolean dismissed = CancellationManager.dismissNotificationsByGroupKey(applicationContext, groupKey);
 
-        if(AwesomeNotificationsPlugin.debug)
+        if (AwesomeNotificationsPlugin.debug)
             Log.d(TAG, "Notifications from group " + groupKey + (dismissed ? "" : "not found to be") + " dismissed");
 
         result.success(true);
@@ -854,7 +968,7 @@ public class AwesomeNotificationsPlugin
         String groupKey = call.arguments();
         boolean dismissed = CancellationManager.cancelSchedulesByGroupKey(applicationContext, groupKey);
 
-        if(AwesomeNotificationsPlugin.debug)
+        if (AwesomeNotificationsPlugin.debug)
             Log.d(TAG, "Scheduled Notifications from group " + groupKey + (dismissed ? "" : "not found to be") + " canceled");
 
         result.success(true);
@@ -865,7 +979,7 @@ public class AwesomeNotificationsPlugin
         String groupKey = call.arguments();
         boolean dismissed = CancellationManager.cancelNotificationsByGroupKey(applicationContext, groupKey);
 
-        if(AwesomeNotificationsPlugin.debug)
+        if (AwesomeNotificationsPlugin.debug)
             Log.d(TAG, "Notifications and schedules from group " + groupKey + (dismissed ? "" : "not found to be") + " canceled");
 
         result.success(true);
@@ -907,7 +1021,7 @@ public class AwesomeNotificationsPlugin
 
     private void channelShowNotificationPage(@NonNull final MethodCall call, @NonNull final Result result) throws Exception {
         String channelKey = call.arguments();
-        if(StringUtils.isNullOrEmpty(channelKey))
+        if (StringUtils.isNullOrEmpty(channelKey))
             PermissionManager.showNotificationConfigPage(
                     applicationContext,
                     new PermissionCompletionHandler() {
@@ -954,16 +1068,16 @@ public class AwesomeNotificationsPlugin
     private void channelMethodCheckPermissions(@NonNull final MethodCall call, @NonNull final Result result) throws Exception {
 
         Map<String, Object> parameters = MapUtils.extractArgument(call.arguments(), Map.class).orNull();
-        if(parameters == null)
+        if (parameters == null)
             throw new AwesomeNotificationException("Parameters are required");
 
         String channelKey = (String) parameters.get(Definitions.NOTIFICATION_CHANNEL_KEY);
         List<String> permissions = (List<String>) parameters.get(Definitions.NOTIFICATION_PERMISSIONS);
 
-        if(permissions == null)
+        if (permissions == null)
             throw new AwesomeNotificationException("Permission list is required");
 
-        if(permissions.isEmpty())
+        if (permissions.isEmpty())
             throw new AwesomeNotificationException("Permission list cannot be empty");
 
         permissions = PermissionManager.arePermissionsAllowed(applicationContext, channelKey, permissions);
@@ -975,16 +1089,16 @@ public class AwesomeNotificationsPlugin
     private void channelMethodShouldShowRationale(@NonNull final MethodCall call, @NonNull final Result result) throws Exception {
 
         Map<String, Object> parameters = MapUtils.extractArgument(call.arguments(), Map.class).orNull();
-        if(parameters == null)
+        if (parameters == null)
             throw new AwesomeNotificationException("Parameters are required");
 
         String channelKey = (String) parameters.get(Definitions.NOTIFICATION_CHANNEL_KEY);
         List<String> permissions = (List<String>) parameters.get(Definitions.NOTIFICATION_PERMISSIONS);
 
-        if(permissions == null)
+        if (permissions == null)
             throw new AwesomeNotificationException("Permission list is required");
 
-        if(permissions.isEmpty())
+        if (permissions.isEmpty())
             throw new AwesomeNotificationException("Permission list cannot be empty");
 
         permissions = PermissionManager.shouldShowRationale(applicationContext, channelKey, permissions);
@@ -996,16 +1110,16 @@ public class AwesomeNotificationsPlugin
     private void channelRequestNotification(@NonNull final MethodCall call, @NonNull final Result result) throws Exception {
 
         Map<String, Object> parameters = MapUtils.extractArgument(call.arguments(), Map.class).orNull();
-        if(parameters == null)
+        if (parameters == null)
             throw new AwesomeNotificationException("Parameters are required");
 
-        if(!parameters.containsKey(Definitions.NOTIFICATION_PERMISSIONS))
+        if (!parameters.containsKey(Definitions.NOTIFICATION_PERMISSIONS))
             throw new AwesomeNotificationException("Permission list is required");
 
         String channelKey = (String) parameters.get(Definitions.NOTIFICATION_CHANNEL_KEY);
         List<String> permissions = (List<String>) parameters.get(Definitions.NOTIFICATION_PERMISSIONS);
 
-        if(ListUtils.isNullOrEmpty(permissions))
+        if (ListUtils.isNullOrEmpty(permissions))
             throw new AwesomeNotificationException("Permission list is required");
         assert permissions != null;
 
@@ -1068,10 +1182,10 @@ public class AwesomeNotificationsPlugin
         channelGroupsData = (List<Object>) platformParameters.get(Definitions.INITIALIZE_CHANNEL_GROUPS);
 
         setDefaultConfigurations(
-            applicationContext,
-            defaultIconPath,
-            channelsData,
-            channelGroupsData
+                applicationContext,
+                defaultIconPath,
+                channelsData,
+                channelGroupsData
         );
 
         if (AwesomeNotificationsPlugin.debug)
@@ -1203,7 +1317,7 @@ public class AwesomeNotificationsPlugin
     private Boolean receiveNotificationAction(Intent intent, NotificationLifeCycle appLifeCycle) {
 
         ActionReceived actionModel
-            = NotificationBuilder
+                = NotificationBuilder
                 .receiveNotificationAction(applicationContext, intent, appLifeCycle);
 
         if (actionModel != null) {
@@ -1217,15 +1331,15 @@ public class AwesomeNotificationsPlugin
         return true;
     }
 
-    private void startListeningPermissions(){
-        if(activityBinding != null){
+    private void startListeningPermissions() {
+        if (activityBinding != null) {
             initialActivity = activityBinding.getActivity();
             activityBinding.addRequestPermissionsResultListener(AwesomePermissionHandler.getInstance());
             activityBinding.addActivityResultListener(AwesomePermissionHandler.getInstance());
         }
     }
 
-    private void stopListeningPermissions(){
+    private void stopListeningPermissions() {
         activityBinding.removeRequestPermissionsResultListener(AwesomePermissionHandler.getInstance());
         activityBinding.removeActivityResultListener(AwesomePermissionHandler.getInstance());
         activityBinding = null;

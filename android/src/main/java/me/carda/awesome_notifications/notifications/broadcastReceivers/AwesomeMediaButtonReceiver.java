@@ -2,6 +2,7 @@ package me.carda.awesome_notifications.notifications.broadcastReceivers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Looper;
 import android.view.KeyEvent;
 
 import androidx.media.session.MediaButtonReceiver;
@@ -15,13 +16,14 @@ import me.carda.awesome_notifications.utils.DateUtils;
 
 import static android.media.session.PlaybackState.ACTION_PLAY_PAUSE;
 
+import java.util.logging.Handler;
+
 public class AwesomeMediaButtonReceiver extends MediaButtonReceiver {
 
     static String TAG = "AwesomeMediaButtonReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Log.d(TAG, "media button received");
         String action = intent.getAction();
 
