@@ -35,6 +35,7 @@ import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitIncomingBr
 import me.carda.awesome_notifications.flutter_callkit_incoming.widgets.CircleTransform
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import me.carda.awesome_notifications.R
 import okhttp3.OkHttpClient
 
@@ -50,7 +51,7 @@ class CallkitNotificationManager(private val context: Context) {
     private var notificationViews: RemoteViews? = null
     private var notificationId: Int = 9696
 
-    private var targetLoadAvatarDefault = object : Target {
+    private var targetLoadAvatarDefault = object : com.squareup.picasso.Target {
         override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
             notificationBuilder.setLargeIcon(bitmap)
             getNotificationManager().notify(notificationId, notificationBuilder.build())

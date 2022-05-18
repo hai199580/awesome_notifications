@@ -6,25 +6,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.hiennv.flutter_callkit_incoming.*
 
 class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
 
         const val ACTION_CALL_INCOMING =
-                "com.hiennv.flutter_callkit_incoming.ACTION_CALL_INCOMING"
-        const val ACTION_CALL_START = "com.hiennv.flutter_callkit_incoming.ACTION_CALL_START"
+                "cankhon.flutter_callkit_incoming.ACTION_CALL_INCOMING"
+        const val ACTION_CALL_START = "cankhon.flutter_callkit_incoming.ACTION_CALL_START"
         const val ACTION_CALL_ACCEPT =
-                "com.hiennv.flutter_callkit_incoming.ACTION_CALL_ACCEPT"
+                "cankhon.flutter_callkit_incoming.ACTION_CALL_ACCEPT"
         const val ACTION_CALL_DECLINE =
-                "com.hiennv.flutter_callkit_incoming.ACTION_CALL_DECLINE"
+                "cankhon.flutter_callkit_incoming.ACTION_CALL_DECLINE"
         const val ACTION_CALL_ENDED =
-                "com.hiennv.flutter_callkit_incoming.ACTION_CALL_ENDED"
+                "cankhon.flutter_callkit_incoming.ACTION_CALL_ENDED"
         const val ACTION_CALL_TIMEOUT =
-                "com.hiennv.flutter_callkit_incoming.ACTION_CALL_TIMEOUT"
+                "cankhon.flutter_callkit_incoming.ACTION_CALL_TIMEOUT"
         const val ACTION_CALL_CALLBACK =
-                "com.hiennv.flutter_callkit_incoming.ACTION_CALL_CALLBACK"
+                "cankhon.flutter_callkit_incoming.ACTION_CALL_CALLBACK"
 
 
         const val EXTRA_CALLKIT_INCOMING_DATA = "EXTRA_CALLKIT_INCOMING_DATA"
