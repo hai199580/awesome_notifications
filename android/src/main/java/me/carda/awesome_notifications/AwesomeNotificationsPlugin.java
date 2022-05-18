@@ -157,7 +157,6 @@ public class AwesomeNotificationsPlugin
     }
 
     private void AttachAwesomeNotificationsPlugin(Context context, MethodChannel channel) {
-        instane = this;
         this.applicationContext = context;
         pluginChannel = channel;
         pluginChannel.setMethodCallHandler(this);
