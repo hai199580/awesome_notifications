@@ -14,7 +14,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 
-public class EventCallbackHandler extends EventChannel.StreamHandler{
+public class EventCallbackHandler implements EventChannel.StreamHandler{
     private EventChannel.EventSink eventSink = null;
 
     @Override
