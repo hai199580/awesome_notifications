@@ -21,7 +21,7 @@ public class EventCallbackHandler extends EventChannel.StreamHandler{
     public void onListen(Object argurments, EventChannel.EventSink sink) {
         this.eventSink = sink;
     }
-    public void send(String event, Map<String, ? extends Object> body){
+    public void send(String event, Map<String, ?> body){
         Map<String,Object> data = new HashMap<>();
         data.put("event",event);
         data.put("body",body);

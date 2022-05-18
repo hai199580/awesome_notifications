@@ -113,7 +113,7 @@ public class AwesomeNotificationsPlugin
         return mainTargetClassName;
     }
 
-    public static void sendEvent(String event, Map<String, ? extends Object> body) {
+    public static void sendEvent(String event, Map<String, ?> body) {
         eventHandler.send(event, body);
     }
 
