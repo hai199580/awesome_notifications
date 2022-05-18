@@ -1,30 +1,66 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="me.carda.awesome_notifications">
+    package="me.carda.awesome_notifications">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-  
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application>
+        <activity
+            android:name=".flutter_callkit_incoming.CallkitIncomingActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:showOnLockScreen="true"
+            android:theme="@style/CallkitIncomingTheme">
+            <intent-filter>
+                <action android:name="cankhon.flutter_callkit_incoming.ACTION_CALL_INCOMING" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".flutter_callkit_incoming.TransparentActivity"
+            android:exported="false"
+            android:theme="@style/TranslucentTheme" />
 
-        <receiver android:name=".notifications.broadcastReceivers.DismissedNotificationReceiver"
-            android:exported="false"/>
-        <receiver android:name=".notifications.broadcastReceivers.ScheduledNotificationReceiver"
-            android:exported="false"/>
-        <receiver android:name=".notifications.broadcastReceivers.KeepOnTopActionReceiver"
-            android:exported="false"/>
+        <receiver
+            android:name=".notifications.broadcastReceivers.DismissedNotificationReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".notifications.broadcastReceivers.ScheduledNotificationReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".notifications.broadcastReceivers.KeepOnTopActionReceiver"
+            android:exported="false" />
         <receiver
             android:name=".notifications.broadcastReceivers.RefreshSchedulesReceiver"
             android:exported="false">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
-                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
-                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
-                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED"/>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-
+        <receiver
+            android:name=".flutter_callkit_incoming.CallkitIncomingBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cankhon.flutter_callkit_incoming.ACTION_CALL_INCOMING" />
+                <action android:name="cankhon.flutter_callkit_incoming.ACTION_CALL_ACCEPT" />
+                <action android:name="cankhon.flutter_callkit_incoming.ACTION_CALL_DECLINE" />
+                <action android:name="cankhon.flutter_callkit_incoming.ACTION_CALL_ENDED" />
+                <action android:name="cankhon.flutter_callkit_incoming.ACTION_CALL_TIMEOUT" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:name=".flutter_callkit_incoming.CallkitSoundPlayerService"/>
     </application>
 </manifest>

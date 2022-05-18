@@ -9,25 +9,78 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e193cc25-4aee-4ee7-85e6-38b386ea7f1b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/Call.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/CallkitIncomingActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/CallkitIncomingBroadcastReceiver.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/CallkitNotificationManager.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/CallkitSoundPlayerService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/FlutterCallkitIncomingPlugin.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/SharedPreferencesUtils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/TransparentActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/Utils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/widgets/CircleTransform.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/flutter_callkit_incoming/widgets/RippleRelativeLayout.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/anim/shake_anim.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-hdpi/ic_accept.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-hdpi/ic_call_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-hdpi/ic_decline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-hdpi/ic_video.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-hdpi/ic_video_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-mdpi/ic_accept.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-mdpi/ic_call_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-mdpi/ic_decline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-mdpi/ic_video.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-mdpi/ic_video_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-v21/bg_button_accept.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-v21/bg_button_decline.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-v21/rounded_button_accept.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-v21/rounded_button_decline.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xhdpi/ic_accept.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xhdpi/ic_call_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xhdpi/ic_decline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xhdpi/ic_video.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xhdpi/ic_video_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxhdpi/ic_accept.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxhdpi/ic_call_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxhdpi/ic_decline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxhdpi/ic_video.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxhdpi/ic_video_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxxhdpi/ic_accept.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxxhdpi/ic_call_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxxhdpi/ic_decline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxxhdpi/ic_default_avatar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxxhdpi/ic_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxxhdpi/ic_video.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable-xxxhdpi/ic_video_missed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable/bg_button_accept.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable/bg_button_decline.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable/rounded_button_accept.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable/rounded_button_decline.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/drawable/transparent.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/layout/activity_callkit_incoming.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/layout/layout_custom_miss_notification.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/layout/layout_custom_notification.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/raw/ringtone_default.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/values/attrs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/values/dimens.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/flutter_callkit_incoming.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/NotificationBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/NotificationBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/enumerators/NotificationImportance.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/enumerators/NotificationImportance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/enumerators/NotificationPrivacy.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/enumerators/NotificationPrivacy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/managers/ChannelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/me/carda/awesome_notifications/notifications/managers/ChannelManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/awesome_notifications.iml" beforeDir="false" afterPath="$PROJECT_DIR$/awesome_notifications.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/utils/notification_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/utils/notification_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/utils/assert_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/utils/assert_utils.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\rafae\.android\avd\Nexus_5_A06.avd]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -60,12 +113,14 @@
     <property name="DEBUGGER_ID" value="Java" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Examples/awesome_notifications_conversion_fix" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
