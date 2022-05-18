@@ -29,7 +29,8 @@ public class EventCallbackHandler implements EventChannel.StreamHandler{
         handler.post(new Runnable() {
             @Override
             public void run() {
-                eventSink.success(data);
+                Map<String,Object> data1 = new HashMap<>();
+                eventSink.success(data1);
             }
         });
     }
