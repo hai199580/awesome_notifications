@@ -38,6 +38,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import android.app.Activity;
 
+import org.jetbrains.annotations.NotNull;
+
 import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitIncomingBroadcastReceiver;
 import me.carda.awesome_notifications.flutter_callkit_incoming.CallkitNotificationManager;
 import me.carda.awesome_notifications.flutter_callkit_incoming.Data;
@@ -111,7 +113,7 @@ public class AwesomeNotificationsPlugin
         return mainTargetClassName;
     }
 
-    public static void sendEvent(String event, Map<String, Object> body) {
+    public static void sendEvent(String event, Map<String, ? extends Object> body) {
         eventHandler.send(event, body);
     }
 
@@ -1377,6 +1379,10 @@ public class AwesomeNotificationsPlugin
 
     @Override
     public void onActivityDestroyed(Activity activity) {
+
+    }
+
+    public static void seet(@NotNull Map<String, ? extends Object> forwardData) {
 
     }
 }
