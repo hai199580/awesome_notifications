@@ -21,16 +21,15 @@ public class EventCallbackHandler implements EventChannel.StreamHandler{
     public void onListen(Object argurments, EventChannel.EventSink sink) {
         this.eventSink = sink;
     }
-    public void send(String event, String body){
-        Map<String,Object> data = new HashMap<>();
+    public void send(String event, Map<String,Object> body){
+        final Map<String,Object> data = new HashMap<>();
         data.put("event",event);
         data.put("body",body);
         android.os.Handler handler = new android.os.Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Map<String,Object> data1 = new HashMap<>();
-                eventSink.success(data1);
+                eventSink.success(data);
             }
         });
     }

@@ -112,11 +112,9 @@ public class AwesomeNotificationsPlugin
         return mainTargetClassName;
     }
 
-    public AwesomeNotificationsPlugin() {
-    }
 
-    public  void sendEvent(String event, String body) {
-        eventHandler.send(event, "body");
+    public static void sendEvent(String event, Map<String,Object> body) {
+        eventHandler.send(event, body);
     }
 
     @Override
@@ -492,8 +490,7 @@ public class AwesomeNotificationsPlugin
 
             switch (call.method) {
                 case "showCallkitIncoming":
-                    Map<String,String> map = new HashMap<>();
-                    map.put("nameCaller","Triu");
+                    HashMap<String,?> map = call.arguments();
                     Data data = new Data(map);
                     data.setFrom("notification");
                     //send BroadcastReceiver
@@ -506,51 +503,54 @@ public class AwesomeNotificationsPlugin
                     result.success("OK");
                     return;
                 case "showMissCallNotification":
-//                    Data data1 = new Data(call.arguments());
-//                    data1.setFrom("notification");
-//                    callkitNotificationManager.showMissCallNotification(data1.toBundle());
-//                    result.success("OK");
+                    HashMap<String,?> map1 = call.arguments();
+                    Data data1 = new Data(map1);
+                    data1.setFrom("notification");
+                    callkitNotificationManager.showMissCallNotification(data1.toBundle());
+                    result.success("OK");
                     return;
                 case "startCall":
-//                    Data data2 = new Data(call.arguments());
-//                    applicationContext.sendBroadcast(
-//                            CallkitIncomingBroadcastReceiver.Companion.getIntentStart(
-//                                    applicationContext,
-//                                    data2.toBundle()
-//                            )
-//                    );
+                    HashMap<String,?> map2= call.arguments();
+                    Data data2 = new Data(map2);
+                    applicationContext.sendBroadcast(
+                            CallkitIncomingBroadcastReceiver.Companion.getIntentStart(
+                                    applicationContext,
+                                    data2.toBundle()
+                            )
+                    );
                     result.success("OK");
                     return;
                 case "endCall":
-//                    Data data3 = new Data(call.arguments());
-//                    applicationContext.sendBroadcast(
-//                            CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
-//                                    applicationContext,
-//                                    data3.toBundle()
-//                            )
-//                    );
+                    HashMap<String,?> map3 = call.arguments();
+                    Data data3 = new Data(map3);
+                    applicationContext.sendBroadcast(
+                            CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
+                                    applicationContext,
+                                    data3.toBundle()
+                            )
+                    );
                     result.success("OK");
                     return;
                 case "endAllCalls":
-//                    ArrayList<Data> calls = getDataActiveCalls(applicationContext);
-//                    for (Data it : calls) {
-//                        if (it.isAccepted()) {
-//                            applicationContext.sendBroadcast(
-//                                    CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
-//                                            applicationContext,
-//                                            it.toBundle()
-//                                    )
-//                            );
-//                        } else {
-//                            applicationContext.sendBroadcast(
-//                                    CallkitIncomingBroadcastReceiver.Companion.getIntentDecline(
-//                                            applicationContext,
-//                                            it.toBundle()
-//                                    )
-//                            );
-//                        }
-//                    }
-//                    removeAllCalls(applicationContext);
+                    ArrayList<Data> calls = getDataActiveCalls(applicationContext);
+                    for (Data it : calls) {
+                        if (it.isAccepted()) {
+                            applicationContext.sendBroadcast(
+                                    CallkitIncomingBroadcastReceiver.Companion.getIntentEnded(
+                                            applicationContext,
+                                            it.toBundle()
+                                    )
+                            );
+                        } else {
+                            applicationContext.sendBroadcast(
+                                    CallkitIncomingBroadcastReceiver.Companion.getIntentDecline(
+                                            applicationContext,
+                                            it.toBundle()
+                                    )
+                            );
+                        }
+                    }
+                    removeAllCalls(applicationContext);
                     result.success("OK");
                     return;
                 case Definitions.CHANNEL_METHOD_INITIALIZE:
